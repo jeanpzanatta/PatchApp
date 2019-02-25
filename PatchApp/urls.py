@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import home_inicio
 from PatchContas import urls as patchcontas_urls
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
@@ -25,4 +25,4 @@ urlpatterns = [
     path('patchcontas/', include(patchcontas_urls)),
     path('admin/', admin.site.urls),
     path('contas/', include('django.contrib.auth.urls'), name='login'),
-]
+] + staticfiles_urlpatterns()
