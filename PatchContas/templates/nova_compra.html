@@ -6,7 +6,6 @@
 <form method="post">
     {% csrf_token %}
     {{ form|bootstrap }}
-    <button class="btn btn-success" type="submit">Salvar</button>
+    <button class="btn btn-success" type="submit">Salvar</button><a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
 </form>
-    <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
 {% endblock %}
