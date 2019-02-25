@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block title %}PatchApp - Nova Venda{% endblock %}
+{% block main %}
+<form method="post">
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    <button class="btn btn-success" type="submit">Salvar</button>
+</form>
+    <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
+{% endblock %}
