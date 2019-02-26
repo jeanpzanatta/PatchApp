@@ -1,13 +1,51 @@
 {% extends 'base.html' %}
 {% block title %}PatchApp - Vendas{% endblock %}
 {% block main %}
-<ul>
-    {% for venda in vendas %}
-        <li>
-            <a href="{% url 'atualizar_venda' venda.id %}" class="link">{{ venda }}</a>
-            - <a href="{% url 'deletar_venda' venda.id %}" class="link">Deletar</a>
-        </li>
-    {% endfor %}
-</ul>
-    <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
+<form class="form-inline">
+    <div class="container">
+        <div class="row">
+            <div class="form-group mb-2">
+                <label for="pesquisa" class="sr-oly">Procurar:</label>
+                <input type="text" name="pesquisa" id="pesquisa" class="form-control">
+            </div>
+                <div class="form-check form-check-inline">
+                    <input type = "radio"
+                        class="form-check-input"
+                        name = "radio_pgto"
+                        id = "nenhum"
+                        value = "nenhum"
+                        checked = "checked" />
+                    <label class="form-check-label" for = "nenhum">Nenhum</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type = "radio"
+                        class="form-check-input"
+                        name = "radio_pgto"
+                        id = "pago"
+                        value = "pago" />
+                    <label class="form-check-label" for = "pago">Pago</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type = "radio"
+                        class="form-check-input"
+                        name = "radio_pgto"
+                        id = "aberto"
+                        value = "aberto" />
+                    <label class="form-check-label" for = "aberto">Aberto</label>
+                </div>
+            <button class="btn btn-success">Ir</button>
+        </div>
+    </div>
+</form>
+<div class="container">
+    <ul class="list-group">
+        {% for venda in vendas %}
+            <li class="list-group-item">
+                <a href="{% url 'atualizar_venda' venda.id %}" class="link">{{ venda }}</a>
+                - <a href="{% url 'deletar_venda' venda.id %}" class="link">Deletar</a>
+            </li>
+        {% endfor %}
+    </ul>
+        <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
+</div>
 {% endblock %}

@@ -1,13 +1,30 @@
 {% extends 'base.html' %}
 {% block title %}PatchApp - Compras{% endblock %}
 {% block main %}
-<ul>
-    {% for compra in compras %}
-        <li>
-            <a href="{% url 'atualizar_compra' compra.id %}" class="link">{{ compra }}</a>
-            - <a href="{% url 'deletar_compra' compra.id %}" class="link">Deletar</a>
-        </li>
-    {% endfor %}
-</ul>
-    <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    <label for="pesquisa" class="sr-oly">Procurar:</label>
+                    <input type="text" name="pesquisa" id="pesquisa"class="form-control" placeholder="palavra-chave">
+                    <label for="data_min" class="sr-oly">A partir de:</label>
+                    <input type="date" name="data_min" id="data_min"class="form-control">
+                    <button class="btn btn-success">Ir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <ul class="list-group">
+        {% for compra in compras %}
+            <li class="list-group-item">
+                <a href="{% url 'atualizar_compra' compra.id %}" class="link">{{ compra }}</a>
+                - <a href="{% url 'deletar_compra' compra.id %}" class="link">Deletar</a>
+            </li>
+        {% endfor %}
+    </ul>
+        <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
+</div>
 {% endblock %}

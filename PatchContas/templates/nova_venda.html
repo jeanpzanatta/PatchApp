@@ -47,7 +47,9 @@
                 Valor: {{ form.parcela_quatro_val }} Data: {{ form.parcela_quatro_data }} Paga: {{ form.parcela_quatro_paga }}
             </div>
         </div>
-        <button class="btn btn-success" type="submit">Salvar</button><a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
+        <button class="btn btn-success" type="submit">Salvar</button>
+        <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Começo</a>
+        <a type="button" href="{% url 'vendas_lista' %}" class="btn btn-info">Lista</a>
     </form>
 </div>
 {% endblock %}
