@@ -1,14 +1,58 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from .models import Compras, Vendas
-from .forms import FormCompras, FormVendas
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
-@login_required
-def tela_inicial(request):
-    return render(request, 'tela_inicial.html')
+class CreateCompra(CreateView):
+    model = Compras
+    fields = ['nome', 'descricao', 'valor', 'data', 'parcelas']
+    success_url = reverse_lazy('tela_inicial')
 
 
+class CreateVenda(CreateView):
+    model = Vendas
+    fields = ['nome', 'descricao', 'parcela_um_val', 'parcela_um_data', 'parcela_um_paga',
+              'parcela_dois_val', 'parcela_dois_data', 'parcela_dois_paga',
+              'parcela_tres_val', 'parcela_tres_data', 'parcela_tres_paga',
+              'parcela_quatro_val', 'parcela_quatro_data', 'parcela_quatro_paga']
+    success_url = reverse_lazy('tela_inicial')
+
+
+class UpdateCompra(UpdateView):
+    model = Compras
+    fields = ['nome', 'descricao', 'valor', 'data', 'parcelas']
+    success_url = reverse_lazy('tela_inicial')
+
+
+class UpdateVenda(UpdateView):
+    model = Vendas
+    fields = ['nome', 'descricao', 'parcela_um_val', 'parcela_um_data', 'parcela_um_paga',
+              'parcela_dois_val', 'parcela_dois_data', 'parcela_dois_paga',
+              'parcela_tres_val', 'parcela_tres_data', 'parcela_tres_paga',
+              'parcela_quatro_val', 'parcela_quatro_data', 'parcela_quatro_paga']
+    success_url = reverse_lazy('tela_inicial')
+
+
+class DeleteCompra(DeleteView):
+    model = Compras
+    success_url = reverse_lazy('tela_inicial')
+
+
+class DeleteVenda(DeleteView):
+    model = Vendas
+    success_url = reverse_lazy('tela_inicial')
+
+
+class VendasList(ListView):
+    model = Vendas
+
+
+class ComprasList(ListView):
+    model = Compras
+
+
+"""
 @login_required
 def compras_lista(request):
     pesquisa = request.GET.get('pesquisa', None)
@@ -19,7 +63,7 @@ def compras_lista(request):
             compras = compras.filter(data__lte=str(data_min)).order_by('data')
     else:
         compras = Compras.objects.all()
-    return render(request, 'lista_compras.html', {'compras': compras})
+    return render(request, 'compras_list.html', {'compras': compras})
 
 
 @login_required
@@ -50,60 +94,5 @@ def vendas_lista(request):
         vendas = Vendas.objects.all()
     if pesquisa:
         vendas = vendas.filter(nome__contains=pesquisa) | vendas.filter(descricao__contains=pesquisa)
-    return render(request, 'lista_vendas.html', {'vendas': vendas})
-
-
-@login_required
-def nova_compra(request):
-    form = FormCompras(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('tela_inicial')
-    return render(request, 'nova_compra.html', {'form': form})
-
-
-@login_required
-def nova_venda(request):
-    form = FormVendas(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('tela_inicial')
-    return render(request, 'nova_venda.html', {'form': form})
-
-
-@login_required
-def deletar_compra(request, id):
-    compra = get_object_or_404(Compras, pk=id)
-    if request.method == 'POST':
-        compra.delete()
-        return redirect('tela_inicial')
-    return render(request, 'deletar_compra.html', {'form': compra})
-
-
-@login_required
-def deletar_venda(request, id):
-    venda = get_object_or_404(Vendas, pk=id)
-    if request.method == 'POST':
-        venda.delete()
-        return redirect('tela_inicial')
-    return render(request, 'deletar_venda.html', {'form': venda})
-
-
-@login_required
-def atualizar_compra(request, id):
-    compra = get_object_or_404(Compras, pk=id)
-    form = FormCompras(request.POST or None, instance=compra)
-    if form.is_valid():
-        form.save()
-        return redirect('tela_inicial')
-    return render(request, 'nova_compra.html', {'form': form})
-
-
-@login_required
-def atualizar_venda(request, id):
-    venda = get_object_or_404(Vendas, pk=id)
-    form = FormVendas(request.POST or None, instance=venda)
-    if form.is_valid():
-        form.save()
-        return redirect('tela_inicial')
-    return render(request, 'nova_venda.html', {'form': form})
+    return render(request, 'vendas_list.html', {'vendas': vendas})
+"""

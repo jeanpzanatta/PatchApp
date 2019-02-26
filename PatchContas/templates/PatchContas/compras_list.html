@@ -18,7 +18,7 @@
 </div>
 <div class="container">
     <ul class="list-group">
-        {% for compra in compras %}
+        {% for compra in object_list %}
             <li class="list-group-item">
                 <a href="{% url 'atualizar_compra' compra.id %}" class="link">{{ compra }}</a>
                 - <a href="{% url 'deletar_compra' compra.id %}" class="link">Deletar</a>

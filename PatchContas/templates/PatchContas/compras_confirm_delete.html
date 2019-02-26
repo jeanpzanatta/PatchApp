@@ -3,8 +3,8 @@
 {% block main %}
 <form method="post">
     {% csrf_token %}
-    <h3>Deseja excluir '{{ form.nome }}' de '{{ form.parcela_um_data }}'?</h3>
+    <h3>Deseja excluir '{{ object.nome }}' de '{{ object.data }}'?</h3>
     <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
-    <button type="submit" class="btn btn-danger">EXCLUIR</button>
+    <button class="btn btn-danger" type="submit">EXCLUIR</button>
 </form>
 {% endblock %}
