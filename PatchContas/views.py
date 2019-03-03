@@ -2,15 +2,21 @@ from .models import Compras, Vendas
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.base import TemplateView
 
 
-class CreateCompra(CreateView):
+class JanelaInicial(LoginRequiredMixin, TemplateView):
+    template_name = 'tela_inicial.html'
+
+
+class CreateCompra(LoginRequiredMixin, CreateView):
     model = Compras
-    fields = ['nome', 'descricao', 'valor', 'data', 'parcelas']
+    fields = ['nome', 'descricao', 'valor', 'data', 'parcelas', 'ususario']
     success_url = reverse_lazy('tela_inicial')
 
 
-class CreateVenda(CreateView):
+class CreateVenda(LoginRequiredMixin, CreateView):
     model = Vendas
     fields = ['nome', 'descricao', 'parcela_um_val', 'parcela_um_data', 'parcela_um_paga',
               'parcela_dois_val', 'parcela_dois_data', 'parcela_dois_paga',
@@ -19,13 +25,13 @@ class CreateVenda(CreateView):
     success_url = reverse_lazy('tela_inicial')
 
 
-class UpdateCompra(UpdateView):
+class UpdateCompra(LoginRequiredMixin, UpdateView):
     model = Compras
     fields = ['nome', 'descricao', 'valor', 'data', 'parcelas']
     success_url = reverse_lazy('tela_inicial')
 
 
-class UpdateVenda(UpdateView):
+class UpdateVenda(LoginRequiredMixin, UpdateView):
     model = Vendas
     fields = ['nome', 'descricao', 'parcela_um_val', 'parcela_um_data', 'parcela_um_paga',
               'parcela_dois_val', 'parcela_dois_data', 'parcela_dois_paga',
@@ -34,21 +40,21 @@ class UpdateVenda(UpdateView):
     success_url = reverse_lazy('tela_inicial')
 
 
-class DeleteCompra(DeleteView):
+class DeleteCompra(LoginRequiredMixin, DeleteView):
     model = Compras
     success_url = reverse_lazy('tela_inicial')
 
 
-class DeleteVenda(DeleteView):
+class DeleteVenda(LoginRequiredMixin, DeleteView):
     model = Vendas
     success_url = reverse_lazy('tela_inicial')
 
 
-class VendasList(ListView):
+class VendasList(LoginRequiredMixin, ListView):
     model = Vendas
 
 
-class ComprasList(ListView):
+class ComprasList(LoginRequiredMixin, ListView):
     model = Compras
 
 

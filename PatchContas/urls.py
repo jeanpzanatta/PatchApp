@@ -1,11 +1,10 @@
 from django.urls import path
-from .views import ComprasList, VendasList, CreateCompra, CreateVenda
+from .views import ComprasList, VendasList, CreateCompra, CreateVenda, JanelaInicial
 from .views import DeleteCompra, DeleteVenda, UpdateCompra, UpdateVenda
-from django.views.generic.base import TemplateView
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='tela_inicial.html'), name='tela_inicial'),
+    path('', JanelaInicial.as_view(), name='tela_inicial'),
     path('compras/', ComprasList.as_view(), name='compras_lista'),
     path('vendas/', VendasList.as_view(), name='vendas_lista'),
     path('nova_compra/', CreateCompra.as_view(), name='nova_compra'),

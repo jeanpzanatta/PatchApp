@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.conf import settings
 
 
 class Compras(models.Model):
@@ -8,6 +9,7 @@ class Compras(models.Model):
     valor = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(0.0)])
     data = models.DateField()
     parcelas = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+    ususario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return str(self.nome) + ' - ' + str(self.data)
@@ -16,6 +18,9 @@ class Compras(models.Model):
 class Vendas(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.TextField()
+    ususario = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                 on_delete=models.SET_NULL,
+                                 null=True)
 
     parcela_um_val = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(0.0)])
     parcela_um_data = models.DateField()
