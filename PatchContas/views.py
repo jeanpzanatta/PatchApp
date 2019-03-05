@@ -11,18 +11,20 @@ class JanelaInicial(LoginRequiredMixin, TemplateView):
 
 
 class CreateCompra(LoginRequiredMixin, CreateView):
+    template_name = 'compras_add.html'
     model = Compras
-    fields = ['nome', 'descricao', 'valor', 'data', 'parcelas', 'ususario']
-    success_url = reverse_lazy('tela_inicial')
+    fields = ['nome', 'descricao', 'valor', 'data', 'parcelas', 'usuario']
+    success_url = reverse_lazy('compras_lista')
 
 
 class CreateVenda(LoginRequiredMixin, CreateView):
+    template_name = 'vendas_add.html'
     model = Vendas
     fields = ['nome', 'descricao', 'parcela_um_val', 'parcela_um_data', 'parcela_um_paga',
               'parcela_dois_val', 'parcela_dois_data', 'parcela_dois_paga',
               'parcela_tres_val', 'parcela_tres_data', 'parcela_tres_paga',
-              'parcela_quatro_val', 'parcela_quatro_data', 'parcela_quatro_paga']
-    success_url = reverse_lazy('tela_inicial')
+              'parcela_quatro_val', 'parcela_quatro_data', 'parcela_quatro_paga', 'usuario']
+    success_url = reverse_lazy('vendas_lista')
 
 
 class UpdateCompra(LoginRequiredMixin, UpdateView):
@@ -52,53 +54,37 @@ class DeleteVenda(LoginRequiredMixin, DeleteView):
 
 class VendasList(LoginRequiredMixin, ListView):
     model = Vendas
+    paginate_by = 10
+
+    def get_queryset(self):
+        pesquisa = self.request.GET.get('pesquisa', None)
+        radio = self.request.GET.get('radio_pgto', None)
+        vendas = self.model.objects.filter(usuario=self.request.user.id)
+        if radio == 'aberto':
+            vendas = vendas.filter(parcela_um_paga=0) | vendas.filter(parcela_dois_paga=0)
+            vendas = vendas | vendas.filter(parcela_tres_paga=0) | vendas.filter(parcela_quatro_paga=0)
+        elif radio == 'pago':
+            #  exclui da query vendas que ja tiveram as parcelas pagas
+            vendas = vendas.exclude(parcela_um_paga=0)
+            vendas = vendas.exclude(parcela_dois_paga=0)
+            vendas = vendas.exclude(parcela_tres_paga=0)
+            vendas = vendas.exclude(parcela_quatro_paga=0)
+        if pesquisa:
+            vendas = vendas.filter(nome__contains=pesquisa) | vendas.filter(descricao__contains=pesquisa)
+        return vendas
 
 
 class ComprasList(LoginRequiredMixin, ListView):
     model = Compras
+    paginate_by = 10
 
-
-"""
-@login_required
-def compras_lista(request):
-    pesquisa = request.GET.get('pesquisa', None)
-    data_min = request.GET.get('data_min', None)
-    if pesquisa or data_min:
-        compras = Compras.objects.filter(nome__contains=pesquisa) | Compras.objects.filter(descricao__contains=pesquisa)
-        if data_min:
-            compras = compras.filter(data__lte=str(data_min)).order_by('data')
-    else:
-        compras = Compras.objects.all()
-    return render(request, 'compras_list.html', {'compras': compras})
-
-
-@login_required
-def vendas_lista(request):
-    pesquisa = request.GET.get('pesquisa', None)
-    radio = request.GET.get('radio_pgto', None)
-    if radio == 'aberto':
-        vendas = Vendas.objects.filter(parcela_um_paga=0) | Vendas.objects.filter(parcela_dois_paga=0)
-        vendas = vendas | Vendas.objects.filter(parcela_tres_paga=0) | Vendas.objects.filter(parcela_quatro_paga=0)
-    elif radio == 'pago':  # TEM QUE OTIMIZAR ESSA BUSCA
-        vendas = Vendas.objects.filter(parcela_um_paga=1,
-                                       parcela_dois_paga=1,
-                                       parcela_tres_paga=1,
-                                       parcela_quatro_paga=1)
-        vendas = vendas | Vendas.objects.filter(parcela_um_paga=1,
-                                                parcela_dois_paga=1,
-                                                parcela_tres_paga=1,
-                                                parcela_quatro_paga=None)
-        vendas = vendas | Vendas.objects.filter(parcela_um_paga=1,
-                                                parcela_dois_paga=1,
-                                                parcela_tres_paga=None,
-                                                parcela_quatro_paga=None)
-        vendas = vendas | Vendas.objects.filter(parcela_um_paga=1,
-                                                parcela_dois_paga=None,
-                                                parcela_tres_paga=None,
-                                                parcela_quatro_paga=None)
-    else:
-        vendas = Vendas.objects.all()
-    if pesquisa:
-        vendas = vendas.filter(nome__contains=pesquisa) | vendas.filter(descricao__contains=pesquisa)
-    return render(request, 'vendas_list.html', {'vendas': vendas})
-"""
+    def get_queryset(self):
+        pesquisa = self.request.GET.get('pesquisa', None)
+        data_min = self.request.GET.get('data_min', None)
+        compras = self.model.objects.filter(usuario=self.request.user.id)
+        if pesquisa or data_min:
+            compras = compras.filter(nome__contains=pesquisa) | compras.filter(
+                                     descricao__contains=pesquisa)
+            if data_min:
+                compras = compras.filter(data__gte=str(data_min)).order_by('data')
+        return compras

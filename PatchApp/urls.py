@@ -20,8 +20,7 @@ from PatchContas import urls as patchcontas_urls
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('patchcontas/', include(patchcontas_urls)),
+    path('', include(patchcontas_urls)),
     path('admin/', admin.site.urls),
     path('contas/', include('django.contrib.auth.urls'), name='login'),
 ]

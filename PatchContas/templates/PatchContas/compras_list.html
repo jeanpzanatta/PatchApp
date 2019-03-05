@@ -7,9 +7,9 @@
             <form class="form-inline">
                 <div class="form-group mb-2">
                     <label for="pesquisa" class="sr-oly">Procurar:</label>
-                    <input type="text" name="pesquisa" id="pesquisa"class="form-control" placeholder="palavra-chave">
+                    <input type="text" name="pesquisa" id="pesquisa" class="form-control" placeholder="palavra-chave">
                     <label for="data_min" class="sr-oly">A partir de:</label>
-                    <input type="date" name="data_min" id="data_min"class="form-control">
+                    <input type="date" name="data_min" id="data_min" class="form-control">
                     <button class="btn btn-success">Ir</button>
                 </div>
             </form>
@@ -17,14 +17,38 @@
     </div>
 </div>
 <div class="container">
-    <ul class="list-group">
-        {% for compra in object_list %}
+    {% for compra in object_list %}
+        <ul class="list-group">
             <li class="list-group-item">
                 <a href="{% url 'atualizar_compra' compra.id %}" class="link">{{ compra }}</a>
                 - <a href="{% url 'deletar_compra' compra.id %}" class="link">Deletar</a>
             </li>
-        {% endfor %}
-    </ul>
-        <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Voltar</a>
+        </ul>
+    {% endfor %}
+    <div class = "container">
+        {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+    <a type="button" href="{% url 'nova_compra' %}" class="btn btn-primary">Adicionar compra</a>
+    <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-secondary">Voltar</a>
 </div>
 {% endblock %}

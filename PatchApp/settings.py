@@ -128,6 +128,6 @@ STATICFILES_DIRS = (
 
 LOGIN_URL = '/contas/login'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'tela_inicial'
 
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'tela_inicial'

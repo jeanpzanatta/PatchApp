@@ -1,28 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}PatchApp - Tela Inicial{% endblock %}
 {% block main %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h3>Escolha uma ação: </h3>
-            </div>
-            <div class="col-md-auto">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Registrar nova
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{% url 'nova_compra' %}" class="dropdown-item" type="button">Compra</a>
-                        <a href="{% url 'nova_venda' %}" class="dropdown-item" type="button">Venda</a>
-                    </div>
-                </div>
-                <div class="btn-group">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Consultar
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{% url 'compras_lista' %}" class="dropdown-item" type="button">Compra</a>
-                        <a href="{% url 'vendas_lista' %}" class="dropdown-item" type="button">Venda</a>
-                    </div>
-            </div>
+    <dif class="row">
+        <dif class="col-md">
+            <a href="{% url 'compras_lista' %}" class="btn btn-primary btn-lg btn-block" type="button">Compras</a>
+            <a href="{% url 'vendas_lista' %}" class="btn btn-primary btn-lg btn-block" type="button">Vendas</a>
+        </dif>
+    </dif>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 
 
@@ -8,19 +8,17 @@ class Compras(models.Model):
     descricao = models.TextField()
     valor = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(0.0)])
     data = models.DateField()
-    parcelas = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
-    ususario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    parcelas = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(6)])
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return str(self.nome) + ' - ' + str(self.data)
+        return str(self.nome) + ' - ' + str(self.data.day) + '/' + str(self.data.month) + '/' + str(self.data.year)
 
 
 class Vendas(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.TextField()
-    ususario = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                 on_delete=models.SET_NULL,
-                                 null=True)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     parcela_um_val = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(0.0)])
     parcela_um_data = models.DateField()
@@ -39,4 +37,5 @@ class Vendas(models.Model):
     parcela_quatro_paga = models.NullBooleanField()
 
     def __str__(self):
-        return str(self.nome) + ' - ' + str(self.parcela_um_data)
+        data = str(self.parcela_um_data.day) + '/' + str(self.parcela_um_data.month) + '/' + str(self.parcela_um_data.year)
+        return str(self.nome) + ' - ' + data

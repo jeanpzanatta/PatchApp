@@ -2,7 +2,6 @@
 {% load bootstrap %}
 {% block title %}PatchApp - Nova Compra{% endblock %}
 {% block main %}
-<ul>
 <form method="post">
     {% csrf_token %}
     {{ form|bootstrap }}

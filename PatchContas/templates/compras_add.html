@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block title %}PatchApp - Nova Compra{% endblock %}
+{% block main %}
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label  " for="id_nome">Nome</label>
+        <div class=" ">
+            <input type="text" name="nome" maxlength="50" class=" form-control" required id="id_nome">
+            <span class="help-block ">{{ form.errors.nome }}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  " for="id_descricao">Descricao</label>
+        <div class=" ">
+            <textarea name="descricao" cols="40" rows="10" class=" form-control" required id="id_descricao"></textarea>
+            <span class="help-block ">{{ form.errors.descricao }}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  " for="id_valor">Valor</label>
+        <div class=" ">
+            <input type="number" name="valor" step="0.01" class=" form-control" required id="id_valor">
+            <span class="help-block ">{{ form.errors.valor }}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  " for="id_data">Data</label>
+        <div class=" ">
+            <input type="date" name="data" class=" form-control" required id="id_data">
+            <span class="help-block ">{{ form.errors.data }}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  " for="id_parcelas">Parcelas</label>
+        <div class=" ">
+            <input type="number" name="parcelas" class=" form-control" id="id_parcelas">
+            <span class="help-block ">{{ form.errors.parcelas }}</span>
+        </div>
+    </div>
+    <input type="hidden" name="usuario" class=" form-control" value="{{ user.id }}" >
+    <button class="btn btn-success" type="submit">Salvar</button>
+    <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Começo</a>
+    <a type="button" href="{% url 'compras_lista' %}" class="btn btn-info">Lista</a>
+</form>
+{% endblock %}

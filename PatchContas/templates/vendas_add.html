@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}PatchApp - Nova Venda{% endblock %}
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row"><div class="col-sm"><p>Nome do cliente: <input type="text" name="nome" maxlength="50" required id="id_nome"></p></div></div>
+        <div class="row"><div class="col-sm"><p>Descrição da venda: <textarea name="descricao" cols="40" rows="10" required id="id_descricao"></textarea>
+        </p></div></div>
+        <div class="row">
+            <div class="col-sm">
+             <h4>Primeira parcela:</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                Valor: <input type="number" name="parcela_um_val" step="0.01" required id="id_parcela_um_val"> Data: <input type="date" name="parcela_um_data" required id="id_parcela_um_data"> Paga: <input type="checkbox" name="parcela_um_paga" id="id_parcela_um_paga">
+                <span class="help-block ">{{ form.errors.parcela_um_val }}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <h4>Segunda parcela:</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                Valor: <input type="number" name="parcela_dois_val" step="0.01" id="id_parcela_dois_val"> Data: <input type="date" name="parcela_dois_data" id="id_parcela_dois_data">
+                <span class="help-block ">{{ form.errors.parcela_dois_val }}</span>
+                Paga: <select name="parcela_dois_paga" id="id_parcela_dois_paga">
+                    <option value="1" selected>Desconhecido</option>
+                    <option value="2">Sim</option>
+                    <option value="3">Não</option></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <h4>Terceira parcela:</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+            Valor: <input type="number" name="parcela_tres_val" step="0.01" id="id_parcela_tres_val"> Data: <input type="date" name="parcela_tres_data" id="id_parcela_tres_data">
+                <span class="help-block ">{{ form.errors.parcela_tres_val }}</span>
+                Paga: <select name="parcela_tres_paga" id="id_parcela_tres_paga">
+                <option value="1" selected>Desconhecido</option>
+                <option value="2">Sim</option>
+                <option value="3">Não</option></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <h4>Quarta parcela:</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                Valor: <input type="number" name="parcela_quatro_val" step="0.01" id="id_parcela_quatro_val"> Data: <input type="date" name="parcela_quatro_data" id="id_parcela_quatro_data">
+                <span class="help-block ">{{ form.errors.parcela_quatro_val }}</span>
+                Paga: <select name="parcela_quatro_paga" id="id_parcela_quatro_paga">
+                    <option value="1" selected>Desconhecido</option>
+                    <option value="2">Sim</option>
+                    <option value="3">Não</option></select>
+            </div>
+        </div>
+        <input type="hidden" name="usuario" class=" form-control" value="{{ user.id }}" >
+        <button class="btn btn-success" type="submit">Salvar</button>
+        <a type="button" href="{% url 'tela_inicial' %}" class="btn btn-primary">Começo</a>
+        <a type="button" href="{% url 'vendas_lista' %}" class="btn btn-info">Lista</a>
+    </form>
+{% endblock %}
