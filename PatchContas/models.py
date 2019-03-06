@@ -12,7 +12,7 @@ class Compras(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return str(self.nome) + ' - ' + str(self.data.day) + '/' + str(self.data.month) + '/' + str(self.data.year)
+        return str(self.nome) + ', primeira parcela em: ' + str(self.data.__format__('%d/%m/%Y'))
 
 
 class Vendas(models.Model):
@@ -37,5 +37,5 @@ class Vendas(models.Model):
     parcela_quatro_paga = models.NullBooleanField()
 
     def __str__(self):
-        data = str(self.parcela_um_data.day) + '/' + str(self.parcela_um_data.month) + '/' + str(self.parcela_um_data.year)
-        return str(self.nome) + ' - ' + data
+        data = str(self.parcela_um_data.__format__('%d/%m/%Y'))
+        return str(self.nome) + ', primeira parcela em: ' + data

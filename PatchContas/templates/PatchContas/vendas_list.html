@@ -7,7 +7,6 @@
             <div class="form-group mb-2">
                 <label for="pesquisa" class="sr-oly">Procurar:</label>
                 <input type="text" name="pesquisa" id="pesquisa" class="form-control">
-            </div>
                 <div class="form-check form-check-inline">
                     <input type = "radio"
                         class="form-check-input"
@@ -33,7 +32,12 @@
                         value = "aberto" />
                     <label class="form-check-label" for = "aberto">Aberto</label>
                 </div>
-            <button class="btn btn-success">Ir</button>
+                <label for="data_min" class="sr-oly">A partir de:</label>
+                <input type="date" name="data_min" id="data_min" class="form-control">
+                <label for="data_max" class="sr-oly">Até:</label>
+                <input type="date" name="data_max" id="data_max" class="form-control">
+                <button class="btn btn-success">Ir</button>
+            </div>
         </div>
     </div>
 </form>

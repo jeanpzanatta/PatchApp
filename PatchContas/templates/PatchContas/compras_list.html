@@ -10,6 +10,8 @@
                     <input type="text" name="pesquisa" id="pesquisa" class="form-control" placeholder="palavra-chave">
                     <label for="data_min" class="sr-oly">A partir de:</label>
                     <input type="date" name="data_min" id="data_min" class="form-control">
+                    <label for="data_max" class="sr-oly">Até:</label>
+                    <input type="date" name="data_max" id="data_max" class="form-control">
                     <button class="btn btn-success">Ir</button>
                 </div>
             </form>
@@ -41,7 +43,7 @@
                     {% endif %}
                 {% endfor %}
                     {% if page_obj.has_next %}
-                        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                        <li><a href="?&page={{ page_obj.next_page_number }}">&raquo;</a></li>
                     {% else %}
                         <li class="disabled"><span>&raquo;</span></li>
                 {% endif %}

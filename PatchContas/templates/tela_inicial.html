@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}PatchApp - Tela Inicial{% endblock %}
 {% block main %}
-    <dif class="row">
-        <dif class="col-md">
+    <div class="row">
+        <div class="col-md">
             <a href="{% url 'compras_lista' %}" class="btn btn-primary btn-lg btn-block" type="button">Compras</a>
             <a href="{% url 'vendas_lista' %}" class="btn btn-primary btn-lg btn-block" type="button">Vendas</a>
-        </dif>
-    </dif>
+        </div>
+    </div>
 {% endblock %}
