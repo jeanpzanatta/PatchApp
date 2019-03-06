@@ -15,12 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import TemplateView
 from PatchContas import urls as patchcontas_urls
 
 
 urlpatterns = [
     path('', include(patchcontas_urls)),
     path('admin/', admin.site.urls),
-    path('contas/', include('django.contrib.auth.urls'), name='login'),
+    path('contas/', include('django.contrib.auth.urls')),
 ]

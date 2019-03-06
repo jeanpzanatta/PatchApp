@@ -9,14 +9,16 @@
 <body>
     <div class="container">
         {% if user.is_authenticated %}
-            <p>
-                Olá {{ user.username }}!
-                <a href="{% url 'logout' %}">Sair</a>
-            </p>
+            <div class="row">
+                <div class="col-12 col-lg-6 col-lg-8"><p class="text-left">Olá {{ user.username }}!
+                <a class="text-left" href="{% url 'logout' %}">Sair</a></p></div>
+                <div class="col-4"><p class="text-right"><a class="text-right" href="{% url 'password_change' %}">Alterar senha</a></p></div>
+            </div>
         {% else %}
             <p>
                 Você não está logado.
-                <a href="{% url 'login' %}">Entrar</a>
+                <a href="{% url 'login' %}">Entrar</a><br>
+                <a href="{% url 'password_reset' %}">Esqueci a senha.</a>
             </p>
         {% endif %}
     </div>

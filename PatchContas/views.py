@@ -87,7 +87,7 @@ class VendasList(LoginRequiredMixin, ListView):
             vendas = vendas | vendas_tot.filter(parcela_tres_paga=0)
             vendas = vendas | vendas_tot.filter(parcela_quatro_paga=0)
         elif radio == 'pago':
-            #  exclui da query vendas que ja tiveram as parcelas pagas
+            #  exclui da query vendas que não tiveram as parcelas pagas
             vendas = vendas.exclude(parcela_um_paga=0)
             vendas = vendas.exclude(parcela_dois_paga=0)
             vendas = vendas.exclude(parcela_tres_paga=0)
