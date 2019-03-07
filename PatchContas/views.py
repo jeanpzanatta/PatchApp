@@ -4,6 +4,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView
+from .forms import ComprasCreateForm, VendasCreateForm
+from django.shortcuts import HttpResponseRedirect
 
 
 class JanelaInicial(LoginRequiredMixin, TemplateView):
@@ -11,20 +13,39 @@ class JanelaInicial(LoginRequiredMixin, TemplateView):
 
 
 class CreateCompra(LoginRequiredMixin, CreateView):
-    template_name = 'compras_add.html'
     model = Compras
-    fields = ['nome', 'descricao', 'valor', 'data', 'parcelas', 'usuario']
+    form_class = ComprasCreateForm
     success_url = reverse_lazy('compras_lista')
+    template_name = 'compras_add.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.usuario = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(CreateCompra, self).get_form_kwargs()
+        kwargs['usuario'] = self.request.user
+        return kwargs
 
 
 class CreateVenda(LoginRequiredMixin, CreateView):
-    template_name = 'vendas_add.html'
     model = Vendas
-    fields = ['nome', 'descricao', 'parcela_um_val', 'parcela_um_data', 'parcela_um_paga',
-              'parcela_dois_val', 'parcela_dois_data', 'parcela_dois_paga',
-              'parcela_tres_val', 'parcela_tres_data', 'parcela_tres_paga',
-              'parcela_quatro_val', 'parcela_quatro_data', 'parcela_quatro_paga', 'usuario']
+    form_class = VendasCreateForm
     success_url = reverse_lazy('vendas_lista')
+    template_name = 'vendas_add.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.usuario = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(CreateVenda, self).get_form_kwargs()
+        kwargs['usuario'] = self.request.user
+        return kwargs
 
 
 class UpdateCompra(LoginRequiredMixin, UpdateView):
