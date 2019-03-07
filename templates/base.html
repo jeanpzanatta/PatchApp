@@ -15,11 +15,13 @@
                 <div class="col-4"><p class="text-right"><a class="text-right" href="{% url 'password_change' %}">Alterar senha</a></p></div>
             </div>
         {% else %}
-            <p>
-                Você não está logado.
-                <a href="{% url 'login' %}">Entrar</a><br>
-                <a href="{% url 'password_reset' %}">Esqueci a senha.</a>
-            </p>
+            <div class="row">
+                <div class="col-lg">
+                    <a class="btn btn-primary" href="{% url 'login' %}">Entrar</a>
+                    <a class="btn btn-outline-primary" href="{% url 'password_reset' %}">Esqueci a senha</a>
+                    <a class="btn btn-outline-success" href="{% url 'novo_usuario' %}">Criar nova conta</a>
+                </div>
+            </div>
         {% endif %}
     </div>
     <div class="container">

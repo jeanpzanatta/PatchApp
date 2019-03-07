@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block title %}PatchApp - Registrar{% endblock %}
+{% block main %}
+{% if user.is_authenticated %}
+    <h2>{{ user.username }} já está logado.</h2>
+{% else %}
+    <h3>Preencha os campos abaixo</h3>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="control-label" for="nome_usuario">Nome:</label>
+            <input type="text" name="nome_usuario" maxlength="50" class="form-control" required id="nome_usuario">
+            <span class="help-block ">{{ msg }}</span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="campo_email">Email:</label>
+            <input type="email" name="campo_email" maxlength="50" class="form-control" required id="campo_email">
+        </div>
+        <div class="form-group">
+            <p class="font-weight-bold">A senha deve conter letras maiúsculas, minúsculas, números e não pode ser semelhante aos outros dados da conta, além de conter no mínimo oito dígitos.</p>
+            <label class="control-label" for="campo_senha">Senha:</label>
+            <input type="password" name="campo_senha" maxlength="50" class="form-control" required id="campo_senha">
+            <span class="help-block ">{{ msg_senha }}</span>
+        </div>
+        <button class="btn btn-success" type="submit">Cadastrar</button>
+    </form>
+{% endif %}
+{% endblock %}
